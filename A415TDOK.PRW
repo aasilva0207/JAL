@@ -1,45 +1,48 @@
 #include 'totvs.ch'
 
-/*/{Protheus.doc} MT410TOK
-MT410TOK - Validar confirmação da operação
+/*/{Protheus.doc} A415TDOK
+Ponto-de-Entrada: A415TDOK - Validação da tudook
 
 @type function
 @version 12.1.33 
 @author Anderson Alberto
-@since 15/01/2024
+@since 19/01/2024
 @return variant, return_description
 /*/
 
-User Function MT410TOK()
+User function A415TDOK()
 
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
 	//³ Declaracao de Variaveis                                                                     ³
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
-	Local lRet		:= .T.
-	Local aAreaSC5  := SC5->(GetArea())
-	Local nDescont	:= 0
-	Local nLoop		:= 0
+    Local aAreaSCJ  := SCJ->(GetArea())
+	Local lRet      := .T.                  // Variável utilizada para controle e validação ao clicar no botão SALVAR do Orçamento de venda
+	Local nDescont  := M->CJ_DESCONT
 
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
 	//³ Valida soma dos descontos por item                                                          ³
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
-	For nLoop := 1 To Len(aCols)
-		nDescont	:= aCols[nLoop, GdFieldPos('C6_DESCONT')]
-	Next nLoop
+	dbSelectArea('TMP1')
+	dbGotop()
+	While !TMP1->(Eof()) .And. M->CJ_FILIAL+M->CJ_NUM == TMP1->CK_FILIAL+TMP1->CK_NUM
+		nDescont	+= TMP1->CK_DESCONT
+		TMP1->(dbSkip())
+	EndDo
+	TMP1->(dbCloseArea())
 
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
 	//³ Atualiza o campo de controle para bloqueio                                                  ³
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 	If ( nDescont >= 10 .And. nDescont <= 20 ) .Or. ( M->C5_DESCONT >= 10 .And. M->C5_DESCONT <= 20 )
-		M->C5_XBLQ := '3'
+		M->CJ_STATUS := '0'
 		MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - GERENTE', 'Atenção!' )
 	ElseIf nDescont > 20 .Or. M->C5_DESCONT > 20
-		M->C5_XBLQ := '4'
+		M->CJ_STATUS := '1'
 		MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - DIRETOR', 'Atenção!' )
 	Else
-		M->C5_XBLQ := ''
+		M->CJ_STATUS := M->CJ_STATUS
 	Endif
 
-	RestArea(aAreaSC5)
+	RestArea(aAreaSCJ)
 
 Return ( lRet )

@@ -15,11 +15,12 @@ User Function MA440COR()
 	//зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
 	//Ё Declaracao de Variaveis                                                                     Ё
 	//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддюддддддддддддддддддддддды
-	Local aCores := {} // PARAMIXB traz a estrutura do array padrЦo
+	Local aCores := PARAMIXB	// PARAMIXB traz a estrutura do array padrЦo
 
 	//зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
 	//Ё AtualizaГЦo de novas legendas de                                                            Ё
 	//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддюддддддддддддддддддддддды
-	aAdd(aCores, {  "C5_BLQ == '3'" , "BR_PRETO", "LUCRATIVIDADE E COMISSцO"  })
+	aAdd(aCores, {  "C5_XBLQ == '3'" , 'BR_PRETO'	, 'LUCRATIVIDADE E COMISSцO - GERENTE'  })
+	aAdd(aCores, {  "C5_XBLQ == '4'" , 'BR_PRETO_0'	, 'LUCRATIVIDADE E COMISSцO - DIRETOR'  })
 
 Return ( aCores )

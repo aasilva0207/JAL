@@ -25,6 +25,8 @@ User Function MA410LEG()
                 {'BR_AMARELO'   ,'Pedido de Venda liberado'                 },;
                 {'BR_AZUL'      ,'Pedido de Venda com Bloqueio de Regra'    },;
                 {'BR_LARANJA'   ,'Pedido de Venda com Bloqueio de Verba'    },;
-                {'BR_PRETO'     ,'LUCRATIVIDADE E COMISSÃO'                 } }//Customização
+                {'BR_PRETO'     ,'LUCRATIVIDADE E COMISSÃO - GERENTE'       },;	// Customização
+				{'BR_PRETO_0'   ,'LUCRATIVIDADE E COMISSÃO - DIRETOR'       } }	// Customização
+				
 
 Return ( aLeg )

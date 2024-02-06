@@ -20,11 +20,12 @@ User Function MA410COR()
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
 	//³ Atualização de novas legendas de                                                            ³
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
-	aAdd(aCores, {"C5_BLQ == '3'" , "BR_PRETO", "LUCRATIVIDADE E COMISSÃO"                                      })
-	aAdd(aCores, {"Empty(C5_LIBEROK).And.Empty(C5_NOTA) .And. Empty(C5_BLQ)", "ENABLE", "Pedido em Aberto"      })
-	aAdd(aCores, {"!Empty(C5_NOTA).Or.C5_LIBEROK=='E' .And. Empty(C5_BLQ)", "DISABLE", "Pedido Encerrado"       })
-	aAdd(aCores, {"!Empty(C5_LIBEROK).And.Empty(C5_NOTA).And. Empty(C5_BLQ)", "BR_AMARELO", "Pedido Liberado"   })
-	aAdd(aCores, {"C5_BLQ == '1'", "BR_AZUL"                                                                    })
-	aAdd(aCores, {"C5_BLQ == '2'", "BR_LARANJA"                                                                 })
+	aAdd(aCores, {"C5_XBLQ == '3'",'BR_PRETO'	, 'LUCRATIVIDADE E COMISSÃO - GERENTE'                      	})
+	aAdd(aCores, {"C5_XBLQ == '4'",'BR_PRETO_0'	, 'LUCRATIVIDADE E COMISSÃO - DIRETOR'							})
+	aAdd(aCores, {"Empty(C5_LIBEROK).And.Empty(C5_NOTA) .And. Empty(C5_XBLQ)", "ENABLE", "Pedido em Aberto"     })
+	aAdd(aCores, {"!Empty(C5_NOTA).Or.C5_LIBEROK=='E' .And. Empty(C5_XBLQ)", "DISABLE", "Pedido Encerrado"      })
+	aAdd(aCores, {"!Empty(C5_LIBEROK).And.Empty(C5_NOTA).And. Empty(C5_XBLQ)", "BR_AMARELO", "Pedido Liberado"  })
+	aAdd(aCores, {"C5_XBLQ == '1'", "BR_AZUL"                                                                   })
+	aAdd(aCores, {"C5_XBLQ == '2'", "BR_LARANJA"                                                                })
 
 Return ( aCores )
