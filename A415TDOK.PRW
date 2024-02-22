@@ -25,7 +25,7 @@ User function A415TDOK()
 	dbSelectArea('TMP1')
 	dbGotop()
 	While !TMP1->(Eof()) .And. M->CJ_FILIAL+M->CJ_NUM == TMP1->CK_FILIAL+TMP1->CK_NUM
-		nDescont	+= TMP1->CK_DESCONT
+		nDescont	+= TMP1->CJ_DESCONT
 		TMP1->(dbSkip())
 	EndDo
 	TMP1->(dbCloseArea())
