@@ -85,7 +85,8 @@ Static Function FUPDSE3()
 	If MsgYesNo('O sistema atualizará COMISSAO dos VENDEDORES,' + MV_PAR01 + ' até ' + MV_PAR02 + '. Deseja confirmar?', 'Confirma alteração?')
 		cQuery	:= " UPDATE " + RetSQLName('SE3') +" SET "
 		cQuery	+= "  E3_XVALANT = E3_COMIS "
-		cQuery	+= " ,E3_XVLCOMI = (E3_BASE * E3_XPERBON) / 100 "
+		cQuery	+= " ,E3_XPERBON = "+ Alltrim(sTr(MV_PAR03)) +""
+		cQuery	+= " ,E3_XVLCOMI = (E3_BASE * "+ Alltrim(sTr(MV_PAR03)) +") / 100 "
 		cQuery	+= " ,E3_COMIS	= E3_XVALANT + E3_XVLCOMI "
 		cQuery	+= " ,E3_XUSUARI	= '"+ Padr(PswChave(RetCodUsr()), 10) +"'"
 		cQuery	+= " ,E3_XDATA	= '"+ dToc(date()) + '-' + Time() +"'"
@@ -125,7 +126,7 @@ Static Function VALIDPERG()
 	cPerg := if(upper(substr(cVersao, 1, 3)) == 'MP8',padr(cPerg,6),padr(cPerg,10))
 	aadd(aRegs,{cPerg,'01','Vend De?'		,'Espanhol','Ingles','mv_ch1','C',6,0,0,'G','','mv_par01','','','','','','','','','','','','','','','','','','','','','','','','','SA3',''})
 	aadd(aRegs,{cPerg,'02','Vend Até?'		,'Espanhol','Ingles','mv_ch2','C',6,0,0,'G','','mv_par02','','','','','','','','','','','','','','','','','','','','','','','','','SA3',''})
-
+	aadd(aRegs,{cPerg,'03','Porcentagem'	,'Espanhol','Ingles','mv_ch3','N',2,0,0,'G','','mv_par03','','','','','','','','','','','','','','','','','','','','','','','','','',''})
 
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
 	//³ Confirma criação das Perguntas                                                              ³
