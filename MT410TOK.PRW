@@ -32,11 +32,11 @@ User Function MT410TOK()
 		If ( nDescont >= 10 .And. nDescont <= 20 ) .Or. ( M->C5_DESCONT >= 10 .And. M->C5_DESCONT <= 20 )
 			MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - GERENTE', 'Atenção!' )
 			M->C5_XBLQ := '3'
-			Return ( .F. )
+			Return ( lRet )
 		ElseIf nDescont >= 20 .Or. M->C5_DESCONT >= 20
 			MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - DIRETOR', 'Atenção!' )
 			M->C5_XBLQ := '4'
-			Return ( .F. )
+			Return ( lRet )
 		Else		// Caso tenha alteração num pedido com desconto
 			M->C5_XBLQ := ''
 		Endif
