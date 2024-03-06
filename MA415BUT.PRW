@@ -83,7 +83,7 @@ Static Function UPDSC5()
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 	If RetCodUsr() $ GetNewPar('AJ_APROVA', '000000')
 		RecLock('SCJ', .F.)
-		SCJ->CJ_XSTATUS == '0'
+		SCJ->CJ_XSTATUS == 'A'
 		SCJ->CJ_XBLQMEN	:= cGetInfo
 		SCJ->(MsUnlock())
 		Msginfo( 'Pedido Aprovado ', 'Atenção' )
