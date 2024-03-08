@@ -24,7 +24,7 @@ User function A415TDOK()
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 	dbSelectArea('TMP1')
 	dbGotop()
-	While !TMP1->(Eof()) //.And. SCJ->CJ_FILIAL+SCJ->CJ_NUM == TMP1->CK_FILENT+TMP1->CK_NUM
+	While !TMP1->(Eof())
 
 		nDescont	+= TMP1->CK_DESCON
 
