@@ -26,7 +26,7 @@ User function A415TDOK()
 	dbGotop()
 	While !TMP1->(Eof())
 
-		nDescont	+= TMP1->CK_DESCON
+		nDescont	+= TMP1->CK_DESCONT
 
 		TMP1->(dbSkip())
 	EndDo
