@@ -17,11 +17,13 @@ User Function MA415BUT()
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 	Local aMenu    := {}
 
-	    aMenu :={{'POSCLI', {|| GETINFO()}, 'APROVAÇÃO JAL'}}
+	    If !ALTERA .Or. !INCLUI
+			aMenu :={{'POSCLI', {|| U_GETCFM()}, 'APROVAÇÃO JAL'}}
+		Endif
 
 Return( aMenu )
 
-/*/{Protheus.doc} GETINFO
+/*/{Protheus.doc} GETCFM
 Atualiza SC5 conforme aprovação
 
 @type function
@@ -31,28 +33,28 @@ Atualiza SC5 conforme aprovação
 @return variant, return_description
 /*/
 
-User Function GETINFO()
+User Function GETCFM()
 
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
 	//³ Declaração de Variaveis                                                                     ³
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
-	Private oDlgPvt	:= Nil
-	Private oGrpFor	:= Nil
-	Private oGetFor	:= Nil
-	Private oGrpAco	:= Nil
-	Private oBtnExe	:= Nil
-	Private cGetInfo := Space(250)
-	Private nJanLarg:= 500
-	Private nJanAltu:= 120
-	Private nJanMeio:= ((nJanLarg)/2)/2
-	Private nTamBtn := 048
+	Private oDlgPvt		:= Nil
+	Private oGrpFor		:= Nil
+	Private oGetFor		:= Nil
+	Private oGrpAco		:= Nil
+	Private oBtnExe		:= Nil
+	Private cGETCFM 	:= Space(250)
+	Private nJanLarg	:= 500
+	Private nJanAltu	:= 120
+	Private nJanMeio	:= ((nJanLarg)/2)/2
+	Private nTamBtn 	:= 048
 
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
 	//³ Criando Janela			                                                                    ³
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 	DEFINE MSDIALOG oDlgPvt TITLE 'DADOS DE APROVAÇÃO' FROM 000, 000  TO nJanAltu, nJanLarg COLORS 0, 16777215 PIXEL
 	@ 003, 003  GROUP oGrpFor TO 30, (nJanLarg/2)-1        PROMPT 'MENSAGEM: ' OF oDlgPvt COLOR 0, 16777215 PIXEL
-	@ 010, 006  MSGET oGetFor VAR cGetInfo SIZE (nJanLarg/2)-9, 013 OF oDlgPvt COLORS 0, 16777215 PIXEL
+	@ 010, 006  MSGET oGetFor VAR cGETCFM SIZE (nJanLarg/2)-9, 013 OF oDlgPvt COLORS 0, 16777215 PIXEL
 	oGetFor:cPlaceHold := 'Insira o mensagem de Aprovação...'
 
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
@@ -83,8 +85,8 @@ Static Function UPDSC5()
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 	If RetCodUsr() $ GetNewPar('AJ_APROVA', '000000')
 		RecLock('SCJ', .F.)
-		SCJ->CJ_XSTATUS == 'A'
-		SCJ->CJ_XBLQMEN	:= cGetInfo
+		SCJ->CJ_XSTATUS := ' '
+		SCJ->CJ_XBLQMEN	:= cGETCFM
 		SCJ->(MsUnlock())
 		Msginfo( 'Pedido Aprovado ', 'Atenção' )
 	Else
