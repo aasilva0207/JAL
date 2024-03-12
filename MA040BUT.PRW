@@ -17,7 +17,7 @@ User Function MTA040MNU()
 	//зддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
 	//Ё InclusЦo da Rotina de UPDATE da SE3                                                         Ё
 	//юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддюддддддддддддддддддддддды
-	aadd(aRotina, {'UPDATE DA COMISSцO','U_UPDSE3' , 0 , 3,0,NIL})
+	aadd(aRotina, {'UPDATE DA COMISSцO','U_UPDSE3' , 0 , 3,  0, NIL})
 
 Return
 
