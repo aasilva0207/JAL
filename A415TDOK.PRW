@@ -17,16 +17,27 @@ User function A415TDOK()
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 	Local aAreaSCJ  := SCJ->(GetArea())
 	Local lRet      := .T.                  // Variável utilizada para controle e validação ao clicar no botão SALVAR do Orçamento de venda
+	Local lBloqGer	:= .F.
+	Local lBloqDir	:= .F.
 	Local nDescont	:= 0
 
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
-	//³ Valida soma dos descontos por item                                                          ³
+	//³ Valida Item com desconto			                                                        ³
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
 	dbSelectArea('TMP1')
 	dbGotop()
 	While !TMP1->(Eof())
 
-		nDescont	+= TMP1->CK_DESCONT
+		nDescont	:= TMP1->CK_DESCONT
+
+		//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+		//³ Valida o tipo de Bloqueio				                                                    ³
+		//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+		If ( nDescont >= 10 .And. nDescont <= 20 ) .Or. ( SCJ->CJ_DESCONT >= 10 .And. SCJ->CJ_DESCONT <= 20 )
+			lBloqGer	:= !lBloqGer
+		ElseIf nDescont >= 20 .Or. SCJ->CJ_DESCONT >= 20
+			llBloqDir	:= !lBloqDir
+		Endif
 
 		TMP1->(dbSkip())
 	EndDo
@@ -34,14 +45,14 @@ User function A415TDOK()
 	//ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
 	//³ Atualiza o campo de controle para bloqueio                                                  ³
 	//ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
-	If ( nDescont >= 10 .And. nDescont <= 20 ) .Or. ( SCJ->CJ_DESCONT >= 10 .And. SCJ->CJ_DESCONT <= 20 )
+	If lBloqGer
 		MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - GERENTE', 'Atenção!' )
 		M->CJ_XSTATUS := '0'
-	ElseIf nDescont >= 20 .Or. SCJ->CJ_DESCONT >= 20
+	ElseIf llBloqDir
 		MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - DIRETOR', 'Atenção!' )
 		M->CJ_XSTATUS := '1'
 	Else
-		M->CJ_XSTATUS := ' '
+		M->CJ_XSTATUS := ' '	// Caso tenha alteração num pedido com desconto
 	Endif
 
 	RestArea(aAreaSCJ)
