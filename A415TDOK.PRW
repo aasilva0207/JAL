@@ -36,7 +36,7 @@ User function A415TDOK()
 		If ( nDescont >= 10 .And. nDescont <= 20 ) .Or. ( SCJ->CJ_DESCONT >= 10 .And. SCJ->CJ_DESCONT <= 20 )
 			lBloqGer	:= !lBloqGer
 		ElseIf nDescont >= 20 .Or. SCJ->CJ_DESCONT >= 20
-			llBloqDir	:= !lBloqDir
+			lBloqDir	:= !lBloqDir
 		Endif
 
 		TMP1->(dbSkip())
@@ -48,7 +48,7 @@ User function A415TDOK()
 	If lBloqGer
 		MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - GERENTE', 'Atenção!' )
 		M->CJ_XSTATUS := '0'
-	ElseIf llBloqDir
+	ElseIf lBloqDir
 		MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - DIRETOR', 'Atenção!' )
 		M->CJ_XSTATUS := '1'
 	Else

@@ -34,7 +34,7 @@ User Function MT410TOK()
 		If ( nDescont >= 10 .And. nDescont <= 20 ) .Or. ( M->C5_DESCONT >= 10 .And. M->C5_DESCONT <= 20 )
 			lBloqGer	:= !lBloqGer
 		ElseIf nDescont >= 20 .Or. M->C5_DESCONT >= 20
-			llBloqDir	:= !lBloqDir
+			lBloqDir	:= !lBloqDir
 		Endif
 	Next
 
@@ -44,7 +44,7 @@ User Function MT410TOK()
 	If lBloqGer
 		MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - GERENTE', 'Atenção!' )
 		M->C5_XBLQ := '3'
-	ElseIf llBloqDir
+	ElseIf lBloqDir
 		MsgInfo( 'Bloqueio - LUCRATIVIDADE E COMISSÃO - DIRETOR', 'Atenção!' )
 		M->C5_XBLQ := '4'
 	Else
